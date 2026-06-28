@@ -1,0 +1,275 @@
+/* static/css/style.css */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f3f5;
+    color: #0d2c54;
+}
+
+.container-pagina {
+    display: flex;
+    min-height: 100vh;
+}
+
+.conteudo-principal {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.cabecalho-principal {
+    background-color: #0d2c54;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cabecalho-info-usuario {
+    display: flex;
+    align-items: center;
+}
+
+.icone-menu {
+    font-size: 2.5rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.detalhes-usuario h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    font-weight: 900;
+}
+
+.detalhes-usuario p {
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.cabecalho-logo h2 {
+    font-size: 1.5rem;
+    margin: 0;
+    font-weight: 900;
+}
+
+.cabecalho-logo p {
+    margin: 0;
+    font-size: 0.7rem;
+    letter-spacing: 2px;
+    text-align: right;
+}
+
+.wrapper-conteudo {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    gap: 2rem;
+}
+
+.area-validacao-ponto {
+    text-align: center;
+    flex-basis: 60%;
+    padding: 2rem;
+}
+
+.logo-ponto h1 {
+    font-size: 8rem;
+    font-weight: 900;
+    margin: 0;
+}
+
+.logo-ponto p {
+    font-size: 2rem;
+    letter-spacing: 5px;
+    margin-top: -20px;
+    margin-bottom: 40px;
+}
+
+.btn-validar {
+    background-color: #0d2c54;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 15px 50px;
+    font-size: 1.2rem;
+    font-weight: 700;
+    cursor: pointer;
+    width: 100%;
+    max-width: 400px;
+}
+
+.area-notificacoes {
+    border: 3px solid #333;
+    padding: 15px;
+    flex-basis: 30%;
+    align-self: flex-start;
+    margin-top: 3rem;
+    background-color: white;
+}
+
+.area-notificacoes h3 {
+    text-align: center;
+    margin-top: 0;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+}
+
+.item-notificacao {
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 0.8rem;
+    margin-bottom: 10px;
+}
+
+.wrapper-visao-dados {
+    flex-grow: 1;
+    display: flex;
+}
+
+.navegacao-lateral {
+    background-color: #0d2c54;
+    padding: 30px 15px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.btn-lateral {
+    background-color: white;
+    color: #333;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px 20px;
+    margin-bottom: 15px;
+    width: 150px;
+    text-align: left;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.btn-lateral.ativo {
+    background-color: #f8c10c;
+    border-color: #f8c10c;
+}
+
+.btn-sair-lateral {
+    margin-top: auto;
+    transition: 500ms;
+}
+
+.btn-sair-lateral:hover {
+    background-color: red;
+    color: #f0f3f5;
+    border-color: #ff0019;
+}
+
+.area-exibicao-dados {
+    padding: 4rem;
+    flex-grow: 1;
+}
+
+.visao-carteira .cartao-info {
+    background-color: #e9ecef;
+    border-radius: 15px;
+    padding: 2rem;
+    display: flex;
+    gap: 2rem;
+}
+
+.visao-carteira .foto-perfil {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+    object-fit: cover;
+    transition: 500ms;
+}
+
+.foto-perfil:hover {
+    transform: scale(1.2);
+    cursor: zoom-in;
+    box-shadow: 0px 20px 40px black;
+}
+
+.visao-carteira .grid-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+    width: 100%;
+}
+
+.item-info .rotulo {
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+.item-info .valor {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.visao-status {
+    background-color: #0d2c54;
+    color: white;
+    padding: 2rem;
+    border-radius: 15px;
+}
+
+.visao-status .grid-info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 2rem;
+}
+.visao-status .item-info .valor {
+    font-size: 1.5rem;
+}
+.visao-status .item-info .rotulo {
+    color: #ddd;
+}
+.metricas-status {
+    margin-top: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.btn-metrica {
+    border: none;
+    padding: 15px 40px;
+    border-radius: 50px;
+    font-weight: 700;
+}
+.metrica-frequencia { background-color: #0d2c54; border: 2px solid white; color: white; }
+.metrica-inadimplencia { background-color: #dc3545; color: white; }
+.metrica-valor { font-size: 2.5rem; font-weight: 900; }
+
+.rodape-principal {
+    background-color: #e9ecef;
+    text-align: center;
+    padding: 15px;
+    font-size: 0.9rem;
+}
+
+.escondido {
+    display: none !important;
+}
+
+.btn-sair {
+    color: white;
+    text-decoration: none;
+    font-weight: 700;
+    padding: 8px 16px;
+    border: 2px solid white;
+    border-radius: 20px;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-sair:hover {
+    background-color: white;
+    color: #0d2c54;
+}

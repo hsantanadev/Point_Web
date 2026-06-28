@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bem-vindo, {{ aluno.nome_completo }}</title>
+    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="shortcut icon" href="/static/img/point.ico" type="image/x-icon">
+</head>
+<body>
+    <div class="container-pagina">
+        <div id="visaoPrincipal" class="conteudo-principal">
+            <header class="cabecalho-principal">
+                <div class="cabecalho-info-usuario">
+                    <div id="iconeMenu" class="icone-menu">☰</div>
+                    <div class="detalhes-usuario"><h1>{{ aluno.nome_completo }}</h1><p>{{ aluno.cpf }}</p></div>
+                </div>
+                <div class="cabecalho-logo"><a href="{{ url_for('sair') }}" class="btn-sair">Sair</a></div>
+            </header>
+            
+            <div class="wrapper-conteudo">
+                <div class="area-validacao-ponto">
+                    {% with messages = get_flashed_messages(with_categories=true) %}
+                        {% if messages %}
+                            {% for category, message in messages %}
+                            <div style="background-color: #d1ecf1; border-color: #bee5eb; color: #0c5460; padding: 1rem; border-radius: .25rem; margin-bottom: 2rem;">
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <div class="logo-ponto"><h1>POINT</h1><p>PONTO WEB</p></div>
+
+                    <div id="secaoValidacao" style="margin-top: 2rem;">
+                        <p style="font-weight: bold;">Verificando códigos ativos...</p>
+                    </div>
+                </div>
+
+                <aside class="area-notificacoes">
+                    <h3>!! NOTIFICAÇÕES</h3>
+                    <div class="item-notificacao">ATUALIZE SEUS DADOS. ENTRE EM CONTATO COM A GERENCIA, ATENCIOSAMENTE...</div>
+                </aside>
+            </div>
+            
+            <footer class="rodape-principal">POINT - @Todos direitos reservados</footer>
+        </div>
+
+        <div id="visaoDados" class="wrapper-visao-dados escondido">
+            <nav class="navegacao-lateral">
+                <button id="btnCarteira" class="btn-lateral ativo">CARTEIRA</button>
+                <button id="btnStatus" class="btn-lateral">STATUS</button>
+                <button id="btnVoltar" class="btn-lateral btn-sair-lateral">VOLTAR</button>
+            </nav>
+            <div class="area-exibicao-dados">
+                <div id="conteudoCarteira" class="visao-carteira">
+                    <div class="cartao-info">
+                        <img src="/static/img/no-power.gif" alt="Foto do Aluno" class="foto-perfil">
+                        <div class="grid-info">
+                            <div class="item-info"><p class="rotulo">NOME:</p><p class="valor">{{ aluno.nome_completo }}</p></div>
+                            <div class="item-info"><p class="rotulo">NATURALIDADE:</p><p class="valor">{{ aluno.naturalidade or 'N/A' }}</p></div>
+                            <div class="item-info"><p class="rotulo">IDADE:</p><p class="valor">{{ aluno.idade or 'N/A' }}</p></div>
+                            <div class="item-info"><p class="rotulo">CURSO:</p><p class="valor">{{ aluno.curso or 'N/A' }}</p></div>
+                            <div class="item-info"><p class="rotulo">NIVEL:</p><p class="valor">{{ aluno.nivel or 'N/A' }}</p></div>
+                            <div class="item-info"><p class="rotulo">STATUS:</p><p class="valor">{{ aluno.status_academico }}</p></div>
+                            <div class="item-info" style="grid-column: span 2;"><p class="rotulo">INSTITUIÇÃO:</p><p class="valor">{{ aluno.instituicao or 'N/A' }}</p></div>
+                        </div>
+                    </div>
+                </div>
+                <div id="conteudoStatus" class="visao-status escondido">
+                     <div class="grid-info">
+                         <div class="item-info"><p class="rotulo">NOME:</p><p class="valor" style="font-size:1.5rem;">{{ aluno.nome_completo }}</p></div>
+                         <div class="item-info"><p class="rotulo">IDADE:</p><p class="valor">{{ aluno.idade or 'N/A' }}</p></div>
+                         <div class="item-info" style="grid-column: span 2;"><p class="rotulo">INSTITUIÇÃO:</p><p class="valor" style="font-size:1.5rem;">{{ aluno.instituicao or 'N/A' }}</p></div>
+                         <div class="item-info" style="grid-column: span 2;"><p class="rotulo">CURSO:</p><p class="valor" style="font-size:1.5rem;">{{ aluno.curso or 'N/A' }}</p></div>
+                         <div class="item-info" style="grid-column: span 2;"><p class="rotulo">STATUS: EM FORMAÇÃO</p></div>
+                    </div>
+                    <div class="metricas-status">
+                        <div><button class="btn-metrica metrica-frequencia">FREQUENCIA</button></div>
+                        <div class="metrica-valor">{{ frequencia }}%</div>
+                        <div><button class="btn-metrica metrica-inadimplencia">FALTAS</button></div>
+                        <div class="metrica-valor">{{ faltas }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const iconeMenu = document.getElementById('iconeMenu');
+        const visaoPrincipal = document.getElementById('visaoPrincipal');
+        const visaoDados = document.getElementById('visaoDados');
+        const btnCarteira = document.getElementById('btnCarteira');
+        const btnStatus = document.getElementById('btnStatus');
+        const btnVoltar = document.getElementById('btnVoltar');
+        const conteudoCarteira = document.getElementById('conteudoCarteira');
+        const conteudoStatus = document.getElementById('conteudoStatus');
+        
+        function mostrarVisaoPrincipal() {
+            visaoPrincipal.classList.remove('escondido');
+            visaoDados.classList.add('escondido');
+        }
+
+        function mostrarVisaoDados() {
+            visaoPrincipal.classList.add('escondido');
+            visaoDados.classList.remove('escondido');
+        }
+
+        iconeMenu.addEventListener('click', mostrarVisaoDados);
+        btnVoltar.addEventListener('click', mostrarVisaoPrincipal);
+
+        btnCarteira.addEventListener('click', () => {
+            conteudoCarteira.classList.remove('escondido');
+            conteudoStatus.classList.add('escondido');
+            btnCarteira.classList.add('ativo');
+            btnStatus.classList.remove('ativo');
+        });
+
+        btnStatus.addEventListener('click', () => {
+            conteudoCarteira.classList.add('escondido');
+            conteudoStatus.classList.remove('escondido');
+            btnCarteira.classList.remove('ativo');
+            btnStatus.classList.add('ativo');
+        });
+
+        const secaoValidacao = document.getElementById('secaoValidacao');
+        let intervaloTimer;
+        let idsCodigosAtivos = [];
+
+        function atualizarTimers() {
+            document.querySelectorAll('.timer').forEach(timer => {
+                const expiraEm = new Date(timer.dataset.expiraEm);
+                const agora = new Date();
+                const diff = Math.floor((expiraEm - agora) / 1000);
+                if (diff <= 0) {
+                    const formContainer = timer.closest('.container-formulario-validacao');
+                    if (formContainer) formContainer.remove();
+                } else {
+                    const minutos = Math.floor(diff / 60);
+                    const segundos = diff % 60;
+                    timer.innerHTML = `Expira em: ${minutos}:${segundos < 10 ? '0' : ''}${segundos}`;
+                }
+            });
+        }
+
+        async function buscarCodigosAtivos() {
+            try {
+                const resposta = await fetch('/api/codigos_ativos');
+                const novosCodigos = await resposta.json();
+                const novosIdsCodigos = novosCodigos.map(c => c.codigo);
+
+                const codigosParaRemover = idsCodigosAtivos.filter(id => !novosIdsCodigos.includes(id));
+                codigosParaRemover.forEach(codigoId => {
+                    const elementoParaRemover = document.getElementById(`form-${codigoId}`);
+                    if (elementoParaRemover) elementoParaRemover.remove();
+                });
+
+                const codigosParaAdicionar = novosCodigos.filter(c => !idsCodigosAtivos.includes(c.codigo));
+                if (codigosParaAdicionar.length > 0 && secaoValidacao.querySelector('.sem-codigos-msg')) {
+                    secaoValidacao.innerHTML = '<h4>Códigos Ativos:</h4>';
+                }
+                codigosParaAdicionar.forEach(codigo => {
+                    const formHtml = `
+                        <div id="form-${codigo.codigo}" class="container-formulario-validacao">
+                            <form method="POST" action="${window.location.pathname}" style="max-width: 400px; margin: auto; margin-bottom: 2rem; border: 1px solid #ccc; padding: 1rem; border-radius: 10px;">
+                                <input type="text" name="codigo" placeholder="DIGITE O CÓDIGO AQUI" required style="width: 100%; padding: 1rem; font-size: 1.5rem; text-align: center; border: 2px solid #0d2c54; border-radius: 10px; margin-bottom: 1rem; font-weight: bold; text-transform: uppercase;">
+                                <button type="submit" class="btn-validar">CONFIRMAR PRESENÇA</button>
+                                <div class="timer mt-2" data-expira-em="${codigo.expira_em}" style="font-weight: bold; margin-top: 10px;"></div>
+                            </form>
+                        </div>
+                    `;
+                    secaoValidacao.insertAdjacentHTML('beforeend', formHtml);
+                });
+                
+                idsCodigosAtivos = novosIdsCodigos;
+
+                if (idsCodigosAtivos.length === 0 && !secaoValidacao.querySelector('.sem-codigos-msg')) {
+                     secaoValidacao.innerHTML = '<p class="sem-codigos-msg" style="font-weight: bold;">Nenhum código ativo no momento.</p>';
+                }
+                
+                if (intervaloTimer) clearInterval(intervaloTimer);
+                if (idsCodigosAtivos.length > 0) {
+                    intervaloTimer = setInterval(atualizarTimers, 1000);
+                    atualizarTimers();
+                }
+
+            } catch (error) {
+                console.error('Erro ao buscar códigos:', error);
+                secaoValidacao.innerHTML = '<p style="color: red;">Erro ao carregar códigos.</p>';
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            buscarCodigosAtivos();
+            setInterval(buscarCodigosAtivos, 5000);
+        });
+    </script>
+</body>
+</html>
